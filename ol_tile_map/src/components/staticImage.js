@@ -36,7 +36,7 @@ class StaticImage extends React.Component {
         // 加载熊猫基地静态地图层
         map.addLayer(new Image({
             source:new ImageStatic({
-                url:'../assets/images/timg.jpg',    // 熊猫基地地图
+                url:require('../assets/images/timg.jpg'),    // 熊猫基地地图
                 imageExtent:extent                  // 映射到地图的范围
             })
         }))

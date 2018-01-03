@@ -25,7 +25,20 @@ class OffLine extends React.Component {
         const offLineMapLayer = new Tile({
             source:new XYZ({
                 // 设置本地离线瓦片所在路径，本里只有一张瓦片，所以只看的到一张瓦片
-                url: '../assets/maps/{z}/{x}/{y}.png'
+                url: '../assets/maps/{z}/{x}/{y}.png',
+                tileUrlFunction:function(tileCoord, pixelRatio, proj){
+                    let z = tileCoord[0];
+                    let x = tileCoord[1];
+                    let y = tileCoord[2];
+                    if(y < 0){
+                        y = Math.abs(y);
+                    }
+
+                    const tileUrl = `../assets/maps/${z}/${x}/${y}.png`;
+                    console.log(tileUrl);
+                    //console.log(require(`../assets/maps/${z}/${x}/${y}.png`));
+                    return tileUrl;
+                }
             })
         });
 
