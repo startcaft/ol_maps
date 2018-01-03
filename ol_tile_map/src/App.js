@@ -7,7 +7,8 @@ import Home from './components/home';
 import XyzTianDu from './components/xyzTianditu';
 import XyzBaidu from './components/xyzBaidu';
 import XyzGoogle from './components/xyzGoogle';
-import OffLine from './components/offLine'
+import OffLine from './components/offLine';
+import StaticImage from './components/staticImage';
 
 class App extends Component {
   render() {
@@ -29,6 +30,7 @@ class App extends Component {
                 <NavLink exact activeStyle={activeStyle} to="/baidu">使用ol.source.XYZ加载百度地图(需转换)</NavLink>&nbsp;|&nbsp;
                 <NavLink exact activeStyle={activeStyle} to="/google">加载Google地图(需解密)</NavLink>&nbsp;|&nbsp;
                 <NavLink exact activeStyle={activeStyle} to="/offline">离线瓦片地图</NavLink>&nbsp;|&nbsp;
+                <NavLink exact activeStyle={activeStyle} to="/static">映射静态图片</NavLink>
               </li>
             </ul>
             <div>
@@ -38,6 +40,7 @@ class App extends Component {
                 <Route exact path="/baidu" component={XyzBaidu}/>
                 <Route exact path="/google" component={XyzGoogle}/>
                 <Route exact path="/offline" component={OffLine}/>
+                <Route exact path="/static" component={StaticImage}/>
               </Switch>
             </div>
           </div>
