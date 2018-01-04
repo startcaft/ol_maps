@@ -1,0 +1,27 @@
+#anchor {
+    cursor:pointer;
+    height: 64px;
+    width: 64px;
+}
+#anchor img {
+    display: block;
+    position: absolute;
+    animation: zoom 5s;
+    -webkit-animation: zoom 5s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes zoom
+{
+    from {top: 0; left: 0; width: 32px; height: 32px;}
+    50% {top: -16px; left: -16px; width: 64px; height: 64px;}
+    to {top: 0; left: 0; width: 32px; height: 32px;}
+}
+
+@-webkit-keyframes zoom /* Safari 和 Chrome */
+{
+    from {top: 0; left: 0; width: 32px; height: 32px;}
+    50% {top: -16px; left: -16px; width: 64px; height: 64px;}
+    to {top: 0; left: 0; width: 32px; height: 32px;}
+}
