@@ -15,66 +15,87 @@ import Fill from 'ol/style/fill';
 import StrokeStyle from 'ol/style/stroke';
 import Select from 'ol/interaction/select';
 import Draw from 'ol/interaction/draw';
+import Circle from 'ol/style/circle';
 
 let map = undefined;
+let draw = undefined;
 
 class MyDraw extends React.Component {
     render(){
         return (
             <div>
-                <div style={{backgrounColor:'#999'}}><span>当前绘制线的坐标：</span><span id='points'></span></div>
+                <form>
+                    <label>地物类型</label>
+                    <select id="drawtype">
+                        <option value="None">None</option>
+                        <option value="Point">点</option>
+                        <option value="LineString">线</option>
+                        <option value="Polygon">面</option>
+                    </select>
+                </form>
                 <div id="map" style={{width:'100%',height:'400px'}}></div>
             </div>
         )
     }
     componentWillMount(){
         map = null;
+        draw = null;
     }
     componentDidMount(){
-        map = new Map({
-            layers:[
-                new TileLayer({
-                    source:new OSM()
+        // 底图
+        const baseLayer = new TileLayer({
+            source:new OSM()
+        })
+        // 临时图层的数据源
+        const source = new VectorSource();          
+        // 新建临时图层，并设置临时图层渲染各种要素的样式
+        const vector = new VectorLayer({
+            source : new VectorSource(),
+            style : new Style({
+                stroke:new StrokeStyle({
+                    color:'#ffcc33',
+                    size:2
+                }),
+                fill:new Fill({
+                    color:'rgba(255,255,255,0.2)'
+                }),
+                image:new Circle({
+                    radius:7,
+                        fill:new Fill({
+                        color:'#ffcc33'
+                    })
                 })
-            ],
+            })
+        });
+        // 新建地图
+        map = new Map({
+            layers:[baseLayer,vector],
+            target:'map',
             view:new View({
                 center: proj.transform([104, 30], 'EPSG:4326', 'EPSG:3857'),
                 zoom: 10
             }),
-            target:'map'
-        });
+        })
 
-        // 添加一个绘制的线要用到的layer
-        const lineLayer = new VectorLayer({
-            source : new VectorSource(),
-            style : new Style({
-                stroke:new StrokeStyle({
-                    color:'red',
-                    size:1
-                })
-            })
-        });
-        map.addLayer(lineLayer);
+        const type = document.getElementById('drawtype');
+        let typeValue = type.value;
+        
+        type.onchange = function(e){
+            map.removeInteraction(draw);
+            addInteraction(e.target.value,source);
+        }
+    }
+}
 
-        // 添加绘图的交互类
-        const lineDraw = new Draw({
-            type:'LineString',
-            source:lineLayer.getSource(),    // 注意设置source，这样绘制好的线，就会添加到这个source里
-            style:new Style({               // 绘制时的样式
-                stroke: new StrokeStyle({
-                    color: '#009933',
-                    size: 1
-                })
-            }),
-            maxPoints:4                     // 限制不能超过4个点
+function addInteraction(typeValue,vectorSource){
+    if(typeValue !== 'None'){
+        draw = new Draw({
+            //设置要素源，绘制结束后将绘制的要素添加到临时图层
+            source:vectorSource,
+            //绘制的类型
+            type:(typeValue)
         });
-        // 监听绘制结束事件,获取坐标
-        lineDraw.on('drawend',function(event){
-            // event.feature 就是当前绘制完成的线的Feature
-            document.getElementById('points').innerHTML = 
-                JSON.stringify(event.feature.getGeometry().getCoordinates());
-        });
-        map.addInteraction(lineDraw);
+        map.addInteraction(draw);
     }
 }
 
