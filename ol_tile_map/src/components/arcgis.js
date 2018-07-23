@@ -92,6 +92,7 @@ class ArcGis extends React.Component {
         //         extent: fullExtent
         //     })
         // });
+
         map = new Map({
             target: 'map',
             layers: [
@@ -100,12 +101,12 @@ class ArcGis extends React.Component {
                }),
                new Tile({
                    source: new TileArcGISRest({
-                       url: 'http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity_Mobile/MapServer'
+                       url: 'http://192.168.100.136:6080/arcgis/rest/services/%E7%AB%99%E5%86%85%E5%AF%BC%E8%88%AA_%E6%B5%8B%E8%AF%95/%E6%AD%A6%E6%B1%89%E9%85%8D%E5%9B%BE20180717_%E4%B8%80%E5%B1%82_%E5%88%87%E7%89%87/MapServer'
                    })
                })
             ],
             view: new View({
-               center: [104.06, 30.67],
+               center: [114.419, 30.61],
                zoom: 12,
                minZoom:10,
                maxZoom: 20,
