@@ -7,6 +7,7 @@ import Home from './components/home';
 import LoadFeatures from './components/loadFeatures';
 import Transform from './components/transform';
 import VectorStyle from './components/vectorStyle';
+import Wfs from './components/wfs';
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
                 <NavLink exact activeStyle={activeStyle} to="/onchange">触发source数据获取加载后的feature</NavLink>&nbsp;|&nbsp;
                 <NavLink exact activeStyle={activeStyle} to="/transform">坐标转换</NavLink>&nbsp;|&nbsp;
                 <NavLink exact activeStyle={activeStyle} to="/style">矢量数据样式</NavLink>&nbsp;|&nbsp;
+                <NavLink exact activeStyle={activeStyle} to="/wfs">WFS</NavLink>
               </li>
             </ul>
             <div>
@@ -35,6 +37,7 @@ class App extends Component {
                 <Route exact path="/onchange" component={LoadFeatures}/>
                 <Route exact path="/transform" component={Transform}/>
                 <Route exact path="/style" component={VectorStyle}/>
+                <Route exact path="/wfs" component={Wfs}/>
               </Switch>
             </div>
           </div>
